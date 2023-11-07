@@ -230,6 +230,7 @@ func flattenTeamsRuleSettings(settings *cloudflare.TeamsRuleSettings) []interfac
 		"egress":                             flattenTeamsEgressSettings(settings.EgressSettings),
 		"untrusted_cert":                     flattenTeamsUntrustedCertSettings(settings.UntrustedCertSettings),
 		"payload_log":                        flattenTeamsDlpPayloadLogSettings(settings.PayloadLog),
+		"dns_resolvers": flattenTeamsDnsResolverSettings(settings.DnsResolverSettings),
 	}
 
 	if settings.IPCategories {
@@ -464,6 +465,10 @@ func flattenTeamsUntrustedCertSettings(settings *cloudflare.UntrustedCertSetting
 	return []interface{}{map[string]interface{}{
 		"action": settings.Action,
 	}}
+}
+
+func flattenTeamsDnsResolverSettings(settings *cloudflare.flattenTeamsDnsResolverSettings) []interface{} {
+	return nil
 }
 
 func inflateTeamsDlpPayloadLogSettings(settings interface{}) *cloudflare.TeamsDlpPayloadLogSettings {

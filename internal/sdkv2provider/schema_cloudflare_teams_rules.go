@@ -192,6 +192,16 @@ var teamsRuleSettings = map[string]*schema.Schema{
 		},
 		Description: "Configure DLP Payload Logging settings for this rule.",
 	},
+	"resolve_dns_through_cloudflare": {
+		Type:        schema.TypeBool,
+		Optional:    true,
+		Description: "Configure whether resolver policy targets Cloudflare DNS.",
+	},
+	"dns_resolvers": {
+		Type:     schema.TypeList,
+		MaxItems: 1,
+		Optional: true,
+	},
 }
 
 var payloadLogSettings = map[string]*schema.Schema{
@@ -288,5 +298,47 @@ var teamsCheckSessionSettings = map[string]*schema.Schema{
 		Type:        schema.TypeString,
 		Required:    true,
 		Description: "Configure how fresh the session needs to be to be considered valid.",
+	},
+}
+
+var teamsDnsResolverSettings = map[string]*schema.Schema{
+	"ipv4": {
+		Type:        schema.TypeList,
+		Optional:    true,
+		Elem:        &schema.Resource{
+			Schema: teamsDnsResolverAddress,
+		},
+		Description: "IPv4 resolvers",
+	},
+	"ipv6": {
+		Type:        schema.TypeList,
+		Optional:    true,
+		Elem:        &schema.Resource{
+			Schema: teamsDnsResolverAddress,
+		},
+		Description: "IPv6 resolvers",
+	},
+}
+
+var teamsDnsResolverAddress = map[string]*schema.Schema{
+	"ip": {
+		Type: schema.TypeString,
+		Optional: false,
+		Description: "Resolver IP address.",
+	},
+	"port": {
+		Type: schema.TypeInt,
+		Optional: true,
+		Description: "Resolver port.",
+	},
+	"vnet_id": {
+		Type: schema.TypeString,
+		Optional: true,
+		Description: "Virtual Network ID.",
+	},
+	"route_through_private_network": {
+		Type: schema.TypeBool,
+		Optional: true,
+		Description: "Whether to use a private network.",
 	},
 }
